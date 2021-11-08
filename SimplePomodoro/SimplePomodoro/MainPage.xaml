@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SimplePomodoro.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:SimplePomodoro.Converters"
+    xmlns:helpers="clr-namespace:SimplePomodoro.Helpers"
+    xmlns:vm="clr-namespace:SimplePomodoro.ViewModels">
+
+    <ContentPage.BindingContext>
+        <vm:MainPageViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries />
+            <converters:TimeUnitToBooleanConverter x:Key="timeUnitToBooleanConverter" />
+
+            <Style TargetType="Entry">
+
+                <Style.Triggers>
+                    <Trigger TargetType="Entry" Property="Text" Value="0">
+                        <Setter Property="Background" Value="Red" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout>
+        <Frame
+            Padding="24"
+            BackgroundColor="Red"
+            CornerRadius="0">
+            <Label
+                FontSize="36"
+                HorizontalTextAlignment="Center"
+                Text="Simple pomodoro"
+                TextColor="White" />
+        </Frame>
+        <StackLayout Orientation="Vertical">
+
+            <StackLayout Orientation="Horizontal">
+                <RadioButton Content="Seconds" IsChecked="{Binding Path=TimeUnit, Mode=TwoWay, Converter={StaticResource timeUnitToBooleanConverter}, ConverterParameter={x:Static helpers:TimeUnits.Second}}" />
+                <RadioButton Content="Minutes" IsChecked="{Binding Path=TimeUnit, Mode=TwoWay, Converter={StaticResource timeUnitToBooleanConverter}, ConverterParameter={x:Static helpers:TimeUnits.Minutes}}" />
+                <RadioButton Content="Hours" IsChecked="{Binding Path=TimeUnit, Mode=TwoWay, Converter={StaticResource timeUnitToBooleanConverter}, ConverterParameter={x:Static helpers:TimeUnits.Hours}}" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Time to work:" />
+                <Entry Text="{Binding TimeLeftOfWOrk}" WidthRequest="60" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Time for break:" />
+                <Entry Text="{Binding TimeLeftForBreak}" WidthRequest="60" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Number of intervals:" />
+                <Entry Text="{Binding Intervals}" WidthRequest="60" />
+            </StackLayout>
+
+            <StackLayout>
+                <Button Clicked="Button_Clicked" Text="Start" />
+                <Button Command="{Binding Exit}" Text="Exit" />
+            </StackLayout>
+
+        </StackLayout>
+
+    </StackLayout>
+
+</ContentPage>
