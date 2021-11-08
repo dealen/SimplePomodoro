@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplePomodoro.Android", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplePomodoro.iOS", "SimplePomodoro\SimplePomodoro.iOS\SimplePomodoro.iOS.csproj", "{F602FC32-0775-40BE-AEE2-25791E9D36DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplePomodoro", "SimplePomodoro\SimplePomodoro\SimplePomodoro.csproj", "{4497B58E-E4B8-4618-B1B3-F4BCCC915557}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplePomodoro", "SimplePomodoro\SimplePomodoro\SimplePomodoro.csproj", "{4497B58E-E4B8-4618-B1B3-F4BCCC915557}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
