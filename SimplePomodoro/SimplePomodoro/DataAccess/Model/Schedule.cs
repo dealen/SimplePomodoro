@@ -6,5 +6,6 @@
         public string Name { get; set; }
         public int TimeOfWork { get; set; }
         public int TimeOfBreak { get; set; }
+        public int Intervals { get; set; }
     }
 }
