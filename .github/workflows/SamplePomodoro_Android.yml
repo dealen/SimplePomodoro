@@ -8,20 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Android
-    - name: Set default Xamarin SDK versions
-      run: |
-        $VM_ASSETS/select-xamarin-sdk-v2.sh --mono=6.10 --android=10.2
     - name: Install dependencies
       run: nuget restore SimplePomodoro.sln
     - name: Build
       run: msbuild SimplePomodoro/SimplePomodoro.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
-        
-  iOS:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: iOS
-    - name: Install dependencies
-      run: nuget restore SimplePomodoro.sln
-    - name: Build
-      run: msbuild SimplePomodoro.iOS/SimplePomodoro.iOS.csproj /verbosity:normal /t:Rebuild /p:Platform=iPhoneSimulator /p:Configuration=Debug
