@@ -10,6 +10,7 @@ namespace SimplePomodoro
         public MainPage()
         {
             InitializeComponent();
+            DisplayAlert("Current culture", $"Current culture: {CultureInfo.CurrentUICulture.Name}", "Ok");
         }
 
         public MainPageViewModel ViewModel
@@ -28,11 +29,6 @@ namespace SimplePomodoro
             {
                 
             }
-        }
-
-        private void Button_Clicked_1(object sender, EventArgs e)
-        {
-            App.SetCultureInfo(CultureInfo.GetCultureInfo("en-US"));
         }
     }
 }

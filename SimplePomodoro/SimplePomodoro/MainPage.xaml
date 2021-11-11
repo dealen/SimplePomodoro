@@ -63,7 +63,6 @@
             <StackLayout>
                 <Button Clicked="Button_Clicked" Text="{x:Static translate:Language.Start}" />
                 <Button Command="{Binding Exit}" Text="{x:Static translate:Language.Exit}" />
-                <Button Clicked="Button_Clicked_1" Text="PL" />
             </StackLayout>
 
         </StackLayout>
