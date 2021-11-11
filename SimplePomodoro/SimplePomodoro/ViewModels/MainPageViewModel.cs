@@ -1,5 +1,12 @@
-﻿using SimplePomodoro.Helpers;
+﻿using SimplePomodoro.DataAccess;
+using SimplePomodoro.DataAccess.Model;
+using SimplePomodoro.Helpers;
 using SimplePomodoro.ViewModels.Base;
+using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SimplePomodoro.ViewModels
 {
@@ -9,11 +16,24 @@ namespace SimplePomodoro.ViewModels
         private int _timeLeftForBreak;
         private TimeUnits _timeUnit;
         private int _intervals;
+        private string _name;
+        private readonly PomodoroRepository _pomodoroRepository;
 
         public MainPageViewModel()
         {
-
+            _pomodoroRepository = new PomodoroRepository();
+            InitSchedule();
+            CommandAddEntrySchedule = new Command(AddToSchedule);
         }
+
+        private void InitSchedule()
+        {
+            Schdules = new ObservableCollection<Schedule>(_pomodoroRepository.GetSchedules());
+        }
+
+        public ICommand CommandAddEntrySchedule { get; }
+
+        public ObservableCollection<Schedule> Schdules { get; set; }
 
         public int TimeLeftOfWOrk 
         {
@@ -37,6 +57,25 @@ namespace SimplePomodoro.ViewModels
         {
             get => _intervals;
             set => SetField(ref _intervals, value);
+        }
+
+        public string Name
+        {
+            get => _name;
+            set => SetField(ref _name, value);
+        }
+
+        private async void AddToSchedule(object obj)
+        {
+            try
+            {
+                await _pomodoroRepository.AddSchedule(Name, TimeLeftOfWOrk, TimeLeftForBreak, Intervals, (int)TimeUnit);
+                InitSchedule();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"error {ex.Message}{Environment.NewLine}{ex.StackTrace}");
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ namespace SimplePomodoro.DataAccess
             return list;
         }
 
-        public async Task AddSchedule(string name, int timeOfWork, int timeOfBreak, int intervals)
+        public async Task AddSchedule(string name, int timeOfWork, int timeOfBreak, int intervals, int timeUnit)
         {
             using (var pomodoroContext = new PomodoroContext())
             {
@@ -31,6 +31,7 @@ namespace SimplePomodoro.DataAccess
                     Intervals = intervals,
                     TimeOfBreak = timeOfBreak,
                     TimeOfWork = timeOfWork,
+                    TimeUnit = timeUnit, 
                     Name = name
                 });
                 await pomodoroContext.SaveChangesAsync();
@@ -43,13 +44,13 @@ namespace SimplePomodoro.DataAccess
             {
                 var item = await pomodoroContext.FindAsync<Schedule>(schedule.ID);
 
-                pomodoroContext.Update(new Schedule()
-                {
-                    Intervals = schedule.Intervals,
-                    TimeOfBreak = schedule.TimeOfBreak,
-                    TimeOfWork = schedule.TimeOfWork,
-                    Name = schedule.Name
-                });
+                item.Intervals = schedule.Intervals;
+                item.TimeOfBreak = schedule.TimeOfBreak;
+                item.TimeOfWork = schedule.TimeOfWork;
+                item.TimeUnit = schedule.TimeUnit;
+                item.Name = schedule.Name;
+
+                pomodoroContext.Update(item);
                 await pomodoroContext.SaveChangesAsync();
             }
         }

@@ -120,6 +120,9 @@
   <data name="Exit" xml:space="preserve">
     <value>Ausfahrt</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name:</value>
+  </data>
   <data name="NumberOfIntervals" xml:space="preserve">
     <value>Anzahl der Intervalle:</value>
   </data>
