@@ -19,7 +19,7 @@ jobs:
         dotnet-version: '3.0.x'
 
     - name: Install dependencies
-      run: nuget restore SimplePomodoro/SimplePomodoro.sln
+      run: nuget restore SimplePomodoro.sln
 
     - name: Build
       run: msbuild SimplePomodoro/SimplePomodoro/SimplePomodoro.Android /t:PackageForAndroid /p:Configuration=Debug
