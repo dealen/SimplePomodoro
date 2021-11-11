@@ -22,4 +22,4 @@ jobs:
       run: nuget restore SimplePomodoro.sln
 
     - name: Build
-      run: msbuild SimplePomodoro/SimplePomodoro/SimplePomodoro.Android /t:PackageForAndroid /p:Configuration=Debug
+      run: msbuild SimplePomodoro/SimplePomodoro.Android/SimplePomodoro.Android.csproj /t:PackageForAndroid /p:Configuration=Debug
