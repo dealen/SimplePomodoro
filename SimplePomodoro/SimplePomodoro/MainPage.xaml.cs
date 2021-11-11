@@ -1,6 +1,6 @@
 ﻿using SimplePomodoro.ViewModels;
-using SimplePomodoro.ViewModels.Base;
 using System;
+using System.Globalization;
 using Xamarin.Forms;
 
 namespace SimplePomodoro
@@ -28,6 +28,11 @@ namespace SimplePomodoro
             {
                 
             }
+        }
+
+        private void Button_Clicked_1(object sender, EventArgs e)
+        {
+            App.SetCultureInfo(CultureInfo.GetCultureInfo("en-US"));
         }
     }
 }

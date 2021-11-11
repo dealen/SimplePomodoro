@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System.Globalization;
+using Xamarin.Forms;
 
 namespace SimplePomodoro
 {
@@ -7,6 +8,7 @@ namespace SimplePomodoro
         public App()
         {
             InitializeComponent();
+            SetCultureInfo(CultureInfo.GetCultureInfo("pl-PL"));
 
             MainPage = new NavigationPage(new MainPage());
         }
@@ -21,6 +23,12 @@ namespace SimplePomodoro
 
         protected override void OnResume()
         {
+        }
+
+        public static void SetCultureInfo(CultureInfo info)
+        {
+            CultureInfo.CurrentCulture = info;
+            CultureInfo.CurrentUICulture = info;
         }
     }
 }

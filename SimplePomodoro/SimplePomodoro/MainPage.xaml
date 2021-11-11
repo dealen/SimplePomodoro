@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:SimplePomodoro.Converters"
     xmlns:helpers="clr-namespace:SimplePomodoro.Helpers"
+    xmlns:translate="clr-namespace:SimplePomodoro.Localization"
     xmlns:vm="clr-namespace:SimplePomodoro.ViewModels">
 
     <ContentPage.BindingContext>
@@ -30,12 +31,12 @@
     <StackLayout>
         <Frame
             Padding="24"
-            BackgroundColor="Red"
+            BackgroundColor="IndianRed"
             CornerRadius="0">
             <Label
                 FontSize="36"
                 HorizontalTextAlignment="Center"
-                Text="Simple pomodoro"
+                Text="{x:Static translate:Language.SimplePomodoro}"
                 TextColor="White" />
         </Frame>
         <StackLayout Orientation="Vertical">
@@ -47,21 +48,22 @@
             </StackLayout>
 
             <StackLayout Orientation="Horizontal">
-                <Label Text="Time to work:" />
+                <Label Text="{x:Static translate:Language.TimeOfWork}" />
                 <Entry Text="{Binding TimeLeftOfWOrk}" WidthRequest="60" />
             </StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Time for break:" />
+                <Label Text="{x:Static translate:Language.TimeOfBreak}" />
                 <Entry Text="{Binding TimeLeftForBreak}" WidthRequest="60" />
             </StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Number of intervals:" />
+                <Label Text="{x:Static translate:Language.NumberOfIntervals}" />
                 <Entry Text="{Binding Intervals}" WidthRequest="60" />
             </StackLayout>
 
             <StackLayout>
-                <Button Clicked="Button_Clicked" Text="Start" />
-                <Button Command="{Binding Exit}" Text="Exit" />
+                <Button Clicked="Button_Clicked" Text="{x:Static translate:Language.Start}" />
+                <Button Command="{Binding Exit}" Text="{x:Static translate:Language.Exit}" />
+                <Button Clicked="Button_Clicked_1" Text="PL" />
             </StackLayout>
 
         </StackLayout>
