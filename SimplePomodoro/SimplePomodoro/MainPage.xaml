@@ -76,7 +76,7 @@
                 <Button
                     x:Name="btnAdd"
                     Command="{Binding CommandAddEntrySchedule}"
-                    Text="{x:Static translate:Language.Exit}" />
+                    Text="{x:Static translate:Language.Add}" />
             </StackLayout>
 
         </StackLayout>
