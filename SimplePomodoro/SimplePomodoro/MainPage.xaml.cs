@@ -1,5 +1,6 @@
 ﻿using SimplePomodoro.ViewModels;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using Xamarin.Forms;
 
@@ -18,7 +19,7 @@ namespace SimplePomodoro
             get => BindingContext as MainPageViewModel;
         }
 
-        private async void Button_Clicked(object sender, EventArgs e)
+        private async void btnStart_Clicked(object sender, EventArgs e)
         {
             try
             {
@@ -27,8 +28,13 @@ namespace SimplePomodoro
             }
             catch (Exception ex)
             {
-                
+                Debug.WriteLine($"error {ex.Message}{Environment.NewLine}{ex.StackTrace}");
             }
+        }
+
+        private void btnExit_Clicked(object sender, EventArgs e)
+        {
+            // close
         }
     }
 }

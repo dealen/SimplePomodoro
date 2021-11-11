@@ -70,6 +70,15 @@ namespace SimplePomodoro.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nazwa:.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ilość interwałów:.
         /// </summary>
         public static string NumberOfIntervals {

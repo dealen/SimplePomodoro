@@ -59,12 +59,30 @@
                 <Label Text="{x:Static translate:Language.NumberOfIntervals}" />
                 <Entry Text="{Binding Intervals}" WidthRequest="60" />
             </StackLayout>
-
-            <StackLayout>
-                <Button Clicked="Button_Clicked" Text="{x:Static translate:Language.Start}" />
-                <Button Command="{Binding Exit}" Text="{x:Static translate:Language.Exit}" />
+            <StackLayout Orientation="Horizontal">
+                <Label Text="{x:Static translate:Language.Name}" />
+                <Entry Text="{Binding Name}" WidthRequest="60" />
             </StackLayout>
 
+            <StackLayout>
+                <Button
+                    x:Name="btnStart"
+                    Clicked="btnStart_Clicked"
+                    Text="{x:Static translate:Language.Start}" />
+                <Button
+                    x:Name="btnExit"
+                    Clicked="btnExit_Clicked"
+                    Text="{x:Static translate:Language.Exit}" />
+                <Button
+                    x:Name="btnAdd"
+                    Command="{Binding CommandAddEntrySchedule}"
+                    Text="{x:Static translate:Language.Exit}" />
+            </StackLayout>
+
+        </StackLayout>
+
+        <StackLayout>
+            <ListView ItemsSource="{Binding Schdules}" />
         </StackLayout>
 
     </StackLayout>
