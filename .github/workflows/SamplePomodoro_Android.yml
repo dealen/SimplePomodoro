@@ -4,12 +4,11 @@ jobs:
   Android:
     runs-on: macos-latest    
     steps:
-    - uses: actions/checkout@v1      
-    - name: Android
-      run: |
-        cd SimplePomodoro
-        nuget restore
-        msbuild SimplePomodoro/SimplePomodoro.Android/SimplePomodoro.Android.csproj /verbosity:normal /t:Rebuild /t:PackageForAndroid /t:SignAndroidPackage /p:Configuration=Debug 
+    - uses: actions/checkout@v1    
+    - name: Install dependencies
+      run: nuget restore SimplePomodoro.sln  
+    - name: Build
+      run: msbuild SimplePomodoro/SimplePomodoro.Android/SimplePomodoro.Android.csproj /verbosity:normal /t:Rebuild /t:PackageForAndroid /t:SignAndroidPackage /p:Configuration=Debug 
     - uses: actions/upload-artifact@v2
       with:
         name: Android App
