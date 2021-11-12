@@ -79,6 +79,33 @@ namespace SimplePomodoro.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gdziny.
+        /// </summary>
+        public static string Hours {
+            get {
+                return ResourceManager.GetString("Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proszę wprowadzić ilość okresów pracy..
+        /// </summary>
+        public static string IntervalsLessThanZero {
+            get {
+                return ResourceManager.GetString("IntervalsLessThanZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minuty.
+        /// </summary>
+        public static string Minutes {
+            get {
+                return ResourceManager.GetString("Minutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nazwa:.
         /// </summary>
         public static string Name {
@@ -88,11 +115,29 @@ namespace SimplePomodoro.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aby zapisać wymagana jest nazwa..
+        /// </summary>
+        public static string NameEmpty {
+            get {
+                return ResourceManager.GetString("NameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ilość interwałów:.
         /// </summary>
         public static string NumberOfIntervals {
             get {
                 return ResourceManager.GetString("NumberOfIntervals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sekundy.
+        /// </summary>
+        public static string Seconds {
+            get {
+                return ResourceManager.GetString("Seconds", resourceCulture);
             }
         }
         
@@ -115,6 +160,24 @@ namespace SimplePomodoro.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proszę wprowadzić czas na przerwę..
+        /// </summary>
+        public static string TimeForBreakLessThanZero {
+            get {
+                return ResourceManager.GetString("TimeForBreakLessThanZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proszę wprowadzić prawidłowy czas pracy..
+        /// </summary>
+        public static string TimeLeftOfWorkLessThanZero {
+            get {
+                return ResourceManager.GetString("TimeLeftOfWorkLessThanZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Czas trwania przertwy:.
         /// </summary>
         public static string TimeOfBreak {
@@ -129,6 +192,15 @@ namespace SimplePomodoro.Localization {
         public static string TimeOfWork {
             get {
                 return ResourceManager.GetString("TimeOfWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weryfikacja.
+        /// </summary>
+        public static string Verification {
+            get {
+                return ResourceManager.GetString("Verification", resourceCulture);
             }
         }
     }

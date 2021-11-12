@@ -123,11 +123,26 @@
   <data name="Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="IntervalsLessThanZero" xml:space="preserve">
+    <value>Please enter the number of work periods</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name:</value>
   </data>
+  <data name="NameEmpty" xml:space="preserve">
+    <value>A name is required to save.</value>
+  </data>
   <data name="NumberOfIntervals" xml:space="preserve">
     <value>Number of intervals:</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>Seconds</value>
   </data>
   <data name="Simple pomodoro" xml:space="preserve">
     <value>Simple pomodoro</value>
@@ -135,10 +150,19 @@
   <data name="Start" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="TimeForBreakLessThanZero" xml:space="preserve">
+    <value>Please enter correct rest time.</value>
+  </data>
+  <data name="TimeLeftOfWorkLessThanZero" xml:space="preserve">
+    <value>Please enter correct work time.</value>
+  </data>
   <data name="TimeOfBreak" xml:space="preserve">
     <value>Duration of break:</value>
   </data>
   <data name="TimeOfWork" xml:space="preserve">
     <value>Duration of work:</value>
+  </data>
+  <data name="Verification" xml:space="preserve">
+    <value>Verification</value>
   </data>
 </root>

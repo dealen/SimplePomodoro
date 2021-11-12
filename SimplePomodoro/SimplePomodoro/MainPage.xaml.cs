@@ -11,7 +11,7 @@ namespace SimplePomodoro
         public MainPage()
         {
             InitializeComponent();
-            DisplayAlert("Current culture", $"Current culture: {CultureInfo.CurrentUICulture.Name}", "Ok");
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
         public MainPageViewModel ViewModel
@@ -23,7 +23,7 @@ namespace SimplePomodoro
         {
             try
             {
-                var pomodoroPage = new PomodoroWork(ViewModel.TimeUnit, ViewModel.TimeLeftOfWOrk, ViewModel.TimeLeftForBreak, ViewModel.Intervals);
+                var pomodoroPage = new PomodoroWork(ViewModel.TimeUnit, ViewModel.TimeOfWork, ViewModel.TimeLeftForBreak, ViewModel.Intervals);
                 await Navigation.PushAsync(pomodoroPage, true);
             }
             catch (Exception ex)
