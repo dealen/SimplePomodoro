@@ -1,14 +1,16 @@
-name: CI on Push and Pull Request
-
+name: CI Push&Pull Xamarin.Android
 on: [push, pull_request]
-
-jobs:        
+jobs:
   Android:
-    runs-on: macos-latest
+    runs-on: macos-latest    
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v1      
     - name: Android
-    - name: Install dependencies
-      run: nuget restore SimplePomodoro.sln
-    - name: Build
-      run: msbuild SimplePomodoro/SimplePomodoro.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
+      run: |
+        cd SimplePomodoro
+        nuget restore
+        msbuild SimplePomodoro.Android/SimplePomodoro.Android.csproj /verbosity:normal /t:Rebuild /t:PackageForAndroid /t:SignAndroidPackage /p:Configuration=Debug 
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Android App
+        path: SimplePomodoro/SimplePomodoro.Android/bin/Debug/com.companyname.simplepomodoro.apk 
