@@ -1,4 +1,5 @@
 ﻿using SimplePomodoro.DataAccess.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,9 +13,9 @@ namespace SimplePomodoro.DataAccess
 
         }
 
-        public List<Schedule> GetSchedules()
+        public IEnumerable<Schedule> GetSchedules()
         {
-            List<Schedule> list = null;
+            IEnumerable<Schedule> list = null;
             using (var pomodoroContext = new PomodoroContext())
             {
                 list = pomodoroContext.Schedules.ToList();
@@ -31,7 +32,7 @@ namespace SimplePomodoro.DataAccess
                     Intervals = intervals,
                     TimeOfBreak = timeOfBreak,
                     TimeOfWork = timeOfWork,
-                    TimeUnit = timeUnit, 
+                    TimeUnit = timeUnit,
                     Name = name
                 });
                 await pomodoroContext.SaveChangesAsync();

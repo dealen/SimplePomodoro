@@ -123,11 +123,26 @@
   <data name="Exit" xml:space="preserve">
     <value>Ausfahrt</value>
   </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Stunden</value>
+  </data>
+  <data name="IntervalsLessThanZero" xml:space="preserve">
+    <value>Bitte geben Sie die Anzahl der Arbeitsperioden ein.</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minuten</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name:</value>
   </data>
+  <data name="NameEmpty" xml:space="preserve">
+    <value>Zum Speichern ist ein Name erforderlich.</value>
+  </data>
   <data name="NumberOfIntervals" xml:space="preserve">
     <value>Anzahl der Intervalle:</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>Sekunden</value>
   </data>
   <data name="Simple pomodoro" xml:space="preserve">
     <value>Simple pomodoro</value>
@@ -135,10 +150,19 @@
   <data name="Start" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="TimeForBreakLessThanZero" xml:space="preserve">
+    <value>Bitte geben Sie die korrekte Ruhezeit ein.</value>
+  </data>
+  <data name="TimeLeftOfWorkLessThanZero" xml:space="preserve">
+    <value>Bitte geben Sie die korrekte Arbeitszeit ein.</value>
+  </data>
   <data name="TimeOfBreak" xml:space="preserve">
     <value>Dauer des Intervalls:</value>
   </data>
   <data name="TimeOfWork" xml:space="preserve">
     <value>Dauer der Arbeit:</value>
+  </data>
+  <data name="Verification" xml:space="preserve">
+    <value>Überprüfung</value>
   </data>
 </root>

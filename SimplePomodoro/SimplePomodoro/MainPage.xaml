@@ -17,7 +17,11 @@
             <converters:TimeUnitToBooleanConverter x:Key="timeUnitToBooleanConverter" />
 
             <Style TargetType="Entry">
-
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="WidthRequest" Value="50" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
                 <Style.Triggers>
                     <Trigger TargetType="Entry" Property="Text" Value="0">
                         <Setter Property="Background" Value="Red" />
@@ -25,15 +29,31 @@
                 </Style.Triggers>
             </Style>
 
+            <Style x:Key="labelFormStyle" TargetType="Label">
+                <Setter Property="WidthRequest" Value="150" />
+                <Setter Property="HorizontalTextAlignment" Value="End" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+
+            <Style x:Key="labelGridStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="WidthRequest" Value="140" />
+            </Style>
 
         </ResourceDictionary>
     </ContentPage.Resources>
     <StackLayout>
         <Frame
-            Padding="24"
+            Margin="2"
+            Padding="5"
             BackgroundColor="IndianRed"
-            CornerRadius="0">
+            CornerRadius="5">
             <Label
+                FontAttributes="Bold"
+                FontFamily="Segoe UI"
                 FontSize="36"
                 HorizontalTextAlignment="Center"
                 Text="{x:Static translate:Language.SimplePomodoro}"
@@ -42,47 +62,143 @@
         <StackLayout Orientation="Vertical">
 
             <StackLayout Orientation="Horizontal">
-                <RadioButton Content="Seconds" IsChecked="{Binding Path=TimeUnit, Mode=TwoWay, Converter={StaticResource timeUnitToBooleanConverter}, ConverterParameter={x:Static helpers:TimeUnits.Second}}" />
-                <RadioButton Content="Minutes" IsChecked="{Binding Path=TimeUnit, Mode=TwoWay, Converter={StaticResource timeUnitToBooleanConverter}, ConverterParameter={x:Static helpers:TimeUnits.Minutes}}" />
-                <RadioButton Content="Hours" IsChecked="{Binding Path=TimeUnit, Mode=TwoWay, Converter={StaticResource timeUnitToBooleanConverter}, ConverterParameter={x:Static helpers:TimeUnits.Hours}}" />
+                <RadioButton Content="{x:Static translate:Language.Seconds}" IsChecked="{Binding Path=TimeUnit, Mode=TwoWay, Converter={StaticResource timeUnitToBooleanConverter}, ConverterParameter={x:Static helpers:TimeUnits.Second}}" />
+                <RadioButton Content="{x:Static translate:Language.Minutes}" IsChecked="{Binding Path=TimeUnit, Mode=TwoWay, Converter={StaticResource timeUnitToBooleanConverter}, ConverterParameter={x:Static helpers:TimeUnits.Minutes}}" />
+                <RadioButton Content="{x:Static translate:Language.Hours}" IsChecked="{Binding Path=TimeUnit, Mode=TwoWay, Converter={StaticResource timeUnitToBooleanConverter}, ConverterParameter={x:Static helpers:TimeUnits.Hours}}" />
             </StackLayout>
 
             <StackLayout Orientation="Horizontal">
-                <Label Text="{x:Static translate:Language.TimeOfWork}" />
-                <Entry Text="{Binding TimeLeftOfWOrk}" WidthRequest="60" />
+                <Label Style="{StaticResource labelFormStyle}" Text="{x:Static translate:Language.TimeOfWork}" />
+                <Entry Text="{Binding TimeOfWork}" />
             </StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="{x:Static translate:Language.TimeOfBreak}" />
-                <Entry Text="{Binding TimeLeftForBreak}" WidthRequest="60" />
+                <Label Style="{StaticResource labelFormStyle}" Text="{x:Static translate:Language.TimeOfBreak}" />
+                <Entry Text="{Binding TimeLeftForBreak}" />
             </StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="{x:Static translate:Language.NumberOfIntervals}" />
-                <Entry Text="{Binding Intervals}" WidthRequest="60" />
+                <Label Style="{StaticResource labelFormStyle}" Text="{x:Static translate:Language.NumberOfIntervals}" />
+                <Entry Text="{Binding Intervals}" />
             </StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="{x:Static translate:Language.Name}" />
-                <Entry Text="{Binding Name}" WidthRequest="60" />
+                <Label Style="{StaticResource labelFormStyle}" Text="{x:Static translate:Language.Name}" />
+                <Entry Text="{Binding Name}" WidthRequest="150" />
             </StackLayout>
 
-            <StackLayout>
-                <Button
-                    x:Name="btnStart"
-                    Clicked="btnStart_Clicked"
-                    Text="{x:Static translate:Language.Start}" />
-                <Button
-                    x:Name="btnExit"
-                    Clicked="btnExit_Clicked"
-                    Text="{x:Static translate:Language.Exit}" />
-                <Button
-                    x:Name="btnAdd"
-                    Command="{Binding CommandAddEntrySchedule}"
-                    Text="{x:Static translate:Language.Add}" />
+            <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                <Frame
+                    Margin="1"
+                    Padding="0.1"
+                    BackgroundColor="LightGray"
+                    CornerRadius="5">
+                    <Button
+                        x:Name="btnStart"
+                        Clicked="btnStart_Clicked"
+                        Text="{x:Static translate:Language.Start}" />
+                </Frame>
+                <Frame
+                    Margin="1"
+                    Padding="0.1"
+                    BackgroundColor="IndianRed"
+                    CornerRadius="5">
+                    <Button
+                        x:Name="btnAdd"
+                        Command="{Binding CommandAddEntrySchedule}"
+                        Text="{x:Static translate:Language.Add}" />
+                </Frame>
+                <Frame
+                    Margin="1"
+                    Padding="0.1"
+                    BackgroundColor="IndianRed"
+                    CornerRadius="5">
+                    <Button
+                        x:Name="btnExit"
+                        Clicked="btnExit_Clicked"
+                        Text="{x:Static translate:Language.Exit}"
+                        WidthRequest="60" />
+                </Frame>
             </StackLayout>
 
         </StackLayout>
 
         <StackLayout>
-            <ListView ItemsSource="{Binding Schdules}" />
+            <ListView
+                HasUnevenRows="true"
+                ItemsSource="{Binding Schdules}"
+                SelectedItem="{Binding SelectedSchedule}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label
+                                    Grid.Column="0"
+                                    Margin="10,0,10,0"
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    Text="{Binding Name}" />
+
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label
+                                            Grid.Column="0"
+                                            Style="{StaticResource labelGridStyle}"
+                                            Text="{x:Static translate:Language.NumberOfIntervals}" />
+                                        <Label
+                                            Grid.Column="1"
+                                            Style="{StaticResource labelGridStyle}"
+                                            Text="{Binding Intervals}" />
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label
+                                            Grid.Column="0"
+                                            Style="{StaticResource labelGridStyle}"
+                                            Text="{x:Static translate:Language.TimeOfWork}" />
+                                        <StackLayout Grid.Column="1" Orientation="Horizontal">
+                                            <Label Style="{StaticResource labelGridStyle}" Text="{Binding TimeOfWork}" />
+                                            <Label Style="{StaticResource labelGridStyle}" Text="{Binding TimeUnit}" />
+                                        </StackLayout>
+                                    </Grid>
+                                    <Grid Grid.Row="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label
+                                            Grid.Column="0"
+                                            Style="{StaticResource labelGridStyle}"
+                                            Text="{x:Static translate:Language.TimeOfBreak}" />
+                                        <StackLayout Grid.Column="1" Orientation="Horizontal">
+                                            <Label Style="{StaticResource labelGridStyle}" Text="{Binding TimeOfBreak}" />
+                                            <Label Style="{StaticResource labelGridStyle}" Text="{Binding TimeUnit}" />
+                                        </StackLayout>
+                                    </Grid>
+                                </Grid>
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
 
     </StackLayout>

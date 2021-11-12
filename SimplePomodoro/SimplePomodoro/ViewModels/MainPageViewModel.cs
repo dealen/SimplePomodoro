@@ -1,10 +1,12 @@
 ﻿using SimplePomodoro.DataAccess;
 using SimplePomodoro.DataAccess.Model;
 using SimplePomodoro.Helpers;
+using SimplePomodoro.Localization;
 using SimplePomodoro.ViewModels.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -17,6 +19,7 @@ namespace SimplePomodoro.ViewModels
         private TimeUnits _timeUnit;
         private int _intervals;
         private string _name;
+        private Schedule _selectedSchedule;
         private readonly PomodoroRepository _pomodoroRepository;
 
         public MainPageViewModel()
@@ -28,17 +31,28 @@ namespace SimplePomodoro.ViewModels
 
         private void InitSchedule()
         {
-            Schdules = new ObservableCollection<Schedule>(_pomodoroRepository.GetSchedules());
+            var _schedules = _pomodoroRepository.GetSchedules();
+            Schdules = new ObservableCollection<Schedule>(_schedules);
+        }
+
+        public Schedule SelectedSchedule
+        {
+            get => _selectedSchedule;
+            set
+            {
+                if (SetField(ref _selectedSchedule, value))
+                    _OnSelectedScheduleChanged();
+            }
         }
 
         public ICommand CommandAddEntrySchedule { get; }
 
         public ObservableCollection<Schedule> Schdules { get; set; }
 
-        public int TimeLeftOfWOrk 
+        public int TimeOfWork
         {
             get => _timeLeftOfWOrk;
-            set => SetField(ref _timeLeftOfWOrk, value); 
+            set => SetField(ref _timeLeftOfWOrk, value);
         }
 
         public int TimeLeftForBreak
@@ -65,17 +79,80 @@ namespace SimplePomodoro.ViewModels
             set => SetField(ref _name, value);
         }
 
+        public bool IsStartEnabled
+        {
+            get
+            {
+                if (TimeOfWork <= 0)
+                    return false;
+
+                if (TimeLeftForBreak <= 0)
+                    return false;
+
+                if (Intervals > 0)
+                    return false;
+
+                if (string.IsNullOrWhiteSpace(Name))
+                    return false;
+
+                return true;
+            }
+        }
+
+        private void _OnSelectedScheduleChanged()
+        {
+            if (_selectedSchedule == null) return;
+
+            Intervals = _selectedSchedule.Intervals;
+            TimeLeftForBreak = _selectedSchedule.TimeOfBreak;
+            TimeOfWork = _selectedSchedule.TimeOfWork;
+            TimeUnit = (TimeUnits)_selectedSchedule.TimeUnit;
+            Name = _selectedSchedule.Name;
+        }
+
         private async void AddToSchedule(object obj)
         {
             try
             {
-                await _pomodoroRepository.AddSchedule(Name, TimeLeftOfWOrk, TimeLeftForBreak, Intervals, (int)TimeUnit);
-                InitSchedule();
+                if (await Verify())
+                {
+                    if (string.IsNullOrWhiteSpace(Name))
+                    {
+                        await Application.Current.MainPage.DisplayAlert(Language.Verification, Language.NameEmpty, "Ok");
+                        return;
+                    }
+
+                    await _pomodoroRepository.AddSchedule(Name, TimeOfWork, TimeLeftForBreak, Intervals, (int)TimeUnit);
+                    InitSchedule();
+                }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"error {ex.Message}{Environment.NewLine}{ex.StackTrace}");
             }
+        }
+
+        private async Task<bool> Verify()
+        {
+            if (TimeOfWork <= 0)
+            {
+                await Application.Current.MainPage.DisplayAlert(Language.Verification, Language.TimeLeftOfWorkLessThanZero, "Ok");
+                return false;
+            }
+
+            if (TimeLeftForBreak <= 0)
+            {
+                await Application.Current.MainPage.DisplayAlert(Language.Verification, Language.TimeForBreakLessThanZero, "Ok");
+                return false;
+            }
+
+            if (Intervals <= 0)
+            {
+                await Application.Current.MainPage.DisplayAlert(Language.Verification, Language.IntervalsLessThanZero, "Ok");
+                return false;
+            }
+
+            return true;
         }
     }
 }
