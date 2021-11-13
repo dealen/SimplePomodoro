@@ -70,6 +70,15 @@ namespace SimplePomodoro.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Usuń.
+        /// </summary>
+        public static string DeleteItem {
+            get {
+                return ResourceManager.GetString("DeleteItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wyjście.
         /// </summary>
         public static string Exit {
@@ -178,7 +187,7 @@ namespace SimplePomodoro.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Czas trwania przertwy:.
+        ///   Looks up a localized string similar to Przerwa:.
         /// </summary>
         public static string TimeOfBreak {
             get {
@@ -187,7 +196,7 @@ namespace SimplePomodoro.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Czas trwania pracy:.
+        ///   Looks up a localized string similar to Praca:.
         /// </summary>
         public static string TimeOfWork {
             get {

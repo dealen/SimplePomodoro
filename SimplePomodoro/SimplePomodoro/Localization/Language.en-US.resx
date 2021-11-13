@@ -120,6 +120,9 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
@@ -157,10 +160,10 @@
     <value>Please enter correct work time.</value>
   </data>
   <data name="TimeOfBreak" xml:space="preserve">
-    <value>Duration of break:</value>
+    <value>Break:</value>
   </data>
   <data name="TimeOfWork" xml:space="preserve">
-    <value>Duration of work:</value>
+    <value>Work:</value>
   </data>
   <data name="Verification" xml:space="preserve">
     <value>Verification</value>
