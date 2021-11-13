@@ -6,6 +6,7 @@ using SimplePomodoro.ViewModels.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -14,25 +15,41 @@ namespace SimplePomodoro.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {
-        private int _timeLeftOfWOrk;
+        private int _timeOfWork;
         private int _timeLeftForBreak;
         private TimeUnits _timeUnit;
         private int _intervals;
         private string _name;
         private Schedule _selectedSchedule;
+        private ObservableCollection<Schedule> _schdules;
         private readonly PomodoroRepository _pomodoroRepository;
 
         public MainPageViewModel()
         {
             _pomodoroRepository = new PomodoroRepository();
-            InitSchedule();
+            InitSchedule(null);
             CommandAddEntrySchedule = new Command(AddToSchedule);
+            CommandDeleteSchedule = new Command(DeleteSchedule);
         }
 
-        private void InitSchedule()
+        private void InitSchedule(Schedule selectedSchedule)
         {
             var _schedules = _pomodoroRepository.GetSchedules();
+            Schdules = null;
             Schdules = new ObservableCollection<Schedule>(_schedules);
+            if (!_schedules.Any()) return;
+            if (selectedSchedule != null)
+            {
+                var selectedItem = _schedules.FirstOrDefault(x => x.ID.Equals(selectedSchedule.ID));
+                if (selectedItem != null)
+                    SelectedSchedule = selectedItem;
+                else
+                    SelectedSchedule = _schedules.First();
+            }
+            else
+            {
+                SelectedSchedule = _schedules.First();
+            }
         }
 
         public Schedule SelectedSchedule
@@ -46,19 +63,32 @@ namespace SimplePomodoro.ViewModels
         }
 
         public ICommand CommandAddEntrySchedule { get; }
+        public ICommand CommandDeleteSchedule { get; }
 
-        public ObservableCollection<Schedule> Schdules { get; set; }
+        public ObservableCollection<Schedule> Schdules
+        {
+            get => _schdules;
+            set => SetField(ref _schdules, value);
+        }
 
         public int TimeOfWork
         {
-            get => _timeLeftOfWOrk;
-            set => SetField(ref _timeLeftOfWOrk, value);
+            get => _timeOfWork;
+            set
+            {
+                SetField(ref _timeOfWork, value);
+                this.OnPropertyChanged(nameof(IsStartEnabled));
+            }
         }
 
         public int TimeLeftForBreak
         {
             get => _timeLeftForBreak;
-            set => SetField(ref _timeLeftForBreak, value);
+            set
+            {
+                SetField(ref _timeLeftForBreak, value);
+                this.OnPropertyChanged(nameof(IsStartEnabled));
+            }
         }
 
         public TimeUnits TimeUnit
@@ -70,13 +100,21 @@ namespace SimplePomodoro.ViewModels
         public int Intervals
         {
             get => _intervals;
-            set => SetField(ref _intervals, value);
+            set
+            {
+                SetField(ref _intervals, value);
+                this.OnPropertyChanged(nameof(IsStartEnabled));
+            }
         }
 
         public string Name
         {
             get => _name;
-            set => SetField(ref _name, value);
+            set
+            {
+                SetField(ref _name, value);
+                this.OnPropertyChanged(nameof(IsStartEnabled));
+            }
         }
 
         public bool IsStartEnabled
@@ -89,7 +127,7 @@ namespace SimplePomodoro.ViewModels
                 if (TimeLeftForBreak <= 0)
                     return false;
 
-                if (Intervals > 0)
+                if (Intervals < 0)
                     return false;
 
                 if (string.IsNullOrWhiteSpace(Name))
@@ -108,6 +146,23 @@ namespace SimplePomodoro.ViewModels
             TimeOfWork = _selectedSchedule.TimeOfWork;
             TimeUnit = (TimeUnits)_selectedSchedule.TimeUnit;
             Name = _selectedSchedule.Name;
+            this.OnPropertyChanged(nameof(IsStartEnabled));
+        }
+
+        private async void DeleteSchedule(object obj)
+        {
+            try
+            {
+                if (obj is Schedule s)
+                {
+                    await _pomodoroRepository.DeleteSchedule(s.ID);
+                    InitSchedule(_selectedSchedule);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"error {ex.Message}{Environment.NewLine}{ex.StackTrace}");
+            }
         }
 
         private async void AddToSchedule(object obj)
@@ -123,7 +178,7 @@ namespace SimplePomodoro.ViewModels
                     }
 
                     await _pomodoroRepository.AddSchedule(Name, TimeOfWork, TimeLeftForBreak, Intervals, (int)TimeUnit);
-                    InitSchedule();
+                    InitSchedule(_selectedSchedule);
                 }
             }
             catch (Exception ex)
