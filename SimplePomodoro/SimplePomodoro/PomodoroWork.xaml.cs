@@ -3,7 +3,6 @@ using SimplePomodoro.ViewModels;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Timers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,15 +15,11 @@ namespace SimplePomodoro
         private readonly int _timeLeftOfWork;
         private readonly int _timeLeftOfBreak;
         private int _intervals;
-        private object _lock = new object();
 
-        public PomodoroWorkViewModel ViewModel
-        {
-            get
-            {
-                return BindingContext as PomodoroWorkViewModel;
-            }
-        }
+        private event Action Work;
+        private event Action Break;
+
+        public PomodoroWorkViewModel ViewModel => BindingContext as PomodoroWorkViewModel;
 
         public PomodoroWork(TimeUnits timeUnit, int timeLeftOfWork, int timeLeftOfBreak, int intervals)
         {
@@ -50,146 +45,54 @@ namespace SimplePomodoro
                     break;
             }
 
-            Task.Run(StartPomodoro);
-            //Task.Run(() =>
-            //{
-            //    DoWork();
-            //});
+            Work -= PomodoroWork_Work;
+            Work += PomodoroWork_Work;
+            Break -= PomodoroWork_Break;
+            Break += PomodoroWork_Break;
+
+            Task.Run(() => Start());
         }
 
-        private void DoWork()
+        private void Start()
         {
-            var workTime = TimeSpan.FromSeconds(_timeLeftOfWork);
-            var breakTime = TimeSpan.FromSeconds(_timeLeftOfBreak);
+            Work?.Invoke();
+        }
 
-            var intervals = _intervals;
-
+        private void PomodoroWork_Work()
+        {
             ViewModel.WorkNow = true;
             ViewModel.BreakNow = false;
-
-            //for (int i = 0; i < _intervals; i++)
-            //{
-            //    ViewModel.WorkNow = false;
-            //    ViewModel.BreakNow = true;
-            //    await Task.Delay(TimeSpan.FromSeconds(_timeLeftOfWork));
-            //    ViewModel.WorkNow = true;
-            //    ViewModel.BreakNow = false;
-            //}
-
-            Debug.WriteLine($"Work interval number {intervals} started {DateTime.Now.ToString("HH mm ss")}");
             Device.StartTimer(TimeSpan.FromSeconds(_timeLeftOfWork), () =>
             {
-                lock (_lock)
-                {
-                    ViewModel.WorkNow = false;
-                    ViewModel.BreakNow = true;
-                    Debug.WriteLine($"Break interval number {intervals} started {DateTime.Now.ToString("HH mm ss")}");
-                    Task.Delay(TimeSpan.FromSeconds(_timeLeftOfWork));
-                    Task.WaitAny();
-                    Debug.WriteLine($"Work interval number {intervals} started {DateTime.Now.ToString("HH mm ss")}");
-                    ViewModel.WorkNow = true;
-                    ViewModel.BreakNow = false;
-                    //Device.StartTimer(TimeSpan.FromSeconds(_timeLeftOfBreak), () =>
-                    //{
-                    //    ViewModel.WorkNow = true;
-                    //    ViewModel.BreakNow = false;
-                    //    Debug.WriteLine($"Break interval number {intervals} ended {DateTime.Now.ToString("HH mm ss")}");
-
-                    //    return true;
-                    //});
-
-                    intervals--;
-                    if (intervals > 0)
-                        return true;
-
-                    Debug.WriteLine($"WORK timer ended {DateTime.Now.ToString("HH mm ss")}");
-                    return false;
-                }
-            });
-            
-            try
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    DisplayAlert("Work completed", "Your work is completed", "Ok");
-
-                    Navigation.PopToRootAsync(true);
-                });
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
-        private void DoBreak()
-        {
-            var time = TimeSpan.FromSeconds(_timeLeftOfBreak);
-
-            Device.StartTimer(time, () =>
-            {
-
-                Debug.WriteLine($"Break intervval number {_intervals} ended");
-                //DoWork();
+                Debug.WriteLine($"Work interval ended");
+                Break?.Invoke();
                 return false;
             });
         }
 
-        private async void StartPomodoro()
+        private void PomodoroWork_Break()
         {
-            for (int i = 0; i < _intervals; i++)
+            ViewModel.WorkNow = false;
+            ViewModel.BreakNow = true;
+            _intervals--;
+            if (_intervals > 0)
             {
-                var startOfInterval = DateTime.Now;
-
-                var isWorkCompleted = false;
-                var isBreakCompleted = false;
-
-                try
+                Device.StartTimer(TimeSpan.FromSeconds(_timeLeftOfBreak), () =>
                 {
-                    ViewModel.WorkNow = true;
-                    while (!isWorkCompleted)
-                    {
-                        if (startOfInterval.AddSeconds(_timeLeftOfWork) < DateTime.Now)
-                        {
-                            isWorkCompleted = true;
-                            ViewModel.WorkNow = false;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                }
-
-                try
-                {
-                    var startOfBreak = DateTime.Now;
-                    ViewModel.BreakNow = true;
-                    while (!isBreakCompleted)
-                    {
-                        if (startOfBreak.AddSeconds(_timeLeftOfBreak) < DateTime.Now)
-                        {
-                            isBreakCompleted = true;
-                            ViewModel.BreakNow = false;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                }
+                    Debug.WriteLine($"Break interval ended");
+                    Work?.Invoke();
+                    return false;
+                });
             }
-
-            try
+            else
             {
+                Work = null;
+                Break = null;
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     DisplayAlert("Work completed", "Your work is completed", "Ok");
-
                     Navigation.PopToRootAsync(true);
                 });
-            }
-            catch (Exception ex)
-            {
-
             }
         }
 
