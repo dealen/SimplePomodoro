@@ -6,16 +6,11 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace SimplePomodoro
+namespace SimplePomodoro.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PomodoroWork : ContentPage
     {
-        private readonly TimeUnits _timeUnits;
-        private readonly int _timeLeftOfWork;
-        private readonly int _timeLeftOfBreak;
-        private int _intervals;
-
         private event Action Work;
         private event Action Break;
 
@@ -24,26 +19,9 @@ namespace SimplePomodoro
         public PomodoroWork(TimeUnits timeUnit, int timeLeftOfWork, int timeLeftOfBreak, int intervals)
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
 
-            _intervals = intervals;
-            _timeUnits = timeUnit;
-            switch (_timeUnits)
-            {
-                case TimeUnits.Second:
-                    _timeLeftOfBreak = timeLeftOfBreak;
-                    _timeLeftOfWork = timeLeftOfWork;
-                    break;
-                case TimeUnits.Minutes:
-                    _timeLeftOfBreak = timeLeftOfBreak * 60;
-                    _timeLeftOfWork = timeLeftOfWork * 60;
-                    break;
-                case TimeUnits.Hours:
-                    _timeLeftOfBreak = timeLeftOfBreak * 60 * 60;
-                    _timeLeftOfWork = timeLeftOfWork * 60 * 60;
-                    break;
-                default:
-                    break;
-            }
+            ViewModel.SetTimeOfBreakAndWork(timeLeftOfWork, timeLeftOfBreak, timeUnit, intervals);
 
             Work -= PomodoroWork_Work;
             Work += PomodoroWork_Work;
@@ -62,7 +40,7 @@ namespace SimplePomodoro
         {
             ViewModel.WorkNow = true;
             ViewModel.BreakNow = false;
-            Device.StartTimer(TimeSpan.FromSeconds(_timeLeftOfWork), () =>
+            Device.StartTimer(TimeSpan.FromSeconds(ViewModel.TimeLeftOfWork), () =>
             {
                 Debug.WriteLine($"Work interval ended");
                 Break?.Invoke();
@@ -74,10 +52,9 @@ namespace SimplePomodoro
         {
             ViewModel.WorkNow = false;
             ViewModel.BreakNow = true;
-            _intervals--;
-            if (_intervals > 0)
+            if (ViewModel.TakeOneInterval() > 0)
             {
-                Device.StartTimer(TimeSpan.FromSeconds(_timeLeftOfBreak), () =>
+                Device.StartTimer(TimeSpan.FromSeconds(ViewModel.TimeLeftOfBreak), () =>
                 {
                     Debug.WriteLine($"Break interval ended");
                     Work?.Invoke();

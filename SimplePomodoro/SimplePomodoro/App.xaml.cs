@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using SimplePomodoro.Views;
+using Xamarin.Forms;
 
 namespace SimplePomodoro
 {
