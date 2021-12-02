@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="SimplePomodoro.PomodoroWork"
+    x:Class="SimplePomodoro.Views.PomodoroWork"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:SimplePomodoro.ViewModels">
@@ -10,7 +10,7 @@
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <Grid>
+        <Grid BackgroundColor="Black">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
@@ -22,22 +22,24 @@
             <Label
                 x:Name="txtWork"
                 Background="Red"
-                HeightRequest="200"
-                HorizontalOptions="CenterAndExpand"
+                FontSize="Large"
+                HorizontalOptions="FillAndExpand"
+                HorizontalTextAlignment="Center"
                 IsVisible="{Binding WorkNow}"
-                Text="WORK"
-                VerticalOptions="CenterAndExpand"
-                WidthRequest="200" />
+                Text="Do your best!"
+                VerticalOptions="FillAndExpand"
+                VerticalTextAlignment="Center" />
 
             <Label
                 x:Name="txtBreak"
                 Background="Green"
-                HeightRequest="200"
-                HorizontalOptions="CenterAndExpand"
+                FontSize="Large"
+                HorizontalOptions="FillAndExpand"
+                HorizontalTextAlignment="Center"
                 IsVisible="{Binding BreakNow}"
-                Text="BREAK"
-                VerticalOptions="CenterAndExpand"
-                WidthRequest="200" />
+                Text="Take a break!"
+                VerticalOptions="FillAndExpand"
+                VerticalTextAlignment="Center" />
 
             <Button
                 Grid.Row="1"

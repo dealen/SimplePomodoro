@@ -1,10 +1,9 @@
 ﻿using SimplePomodoro.ViewModels;
 using System;
 using System.Diagnostics;
-using System.Globalization;
 using Xamarin.Forms;
 
-namespace SimplePomodoro
+namespace SimplePomodoro.Views
 {
     public partial class MainPage : ContentPage
     {
@@ -34,7 +33,7 @@ namespace SimplePomodoro
 
         private void btnExit_Clicked(object sender, EventArgs e)
         {
-            // close
+            System.Environment.Exit(0);
         }
     }
 }
