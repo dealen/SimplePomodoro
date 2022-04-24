@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "SimplePomodoro": {
+      "commandName": "Project",
+      "remoteDebugEnabled": true,
+      "nativeDebugging": true
+    }
+  }
+}

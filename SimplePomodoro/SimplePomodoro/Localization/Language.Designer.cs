@@ -70,6 +70,15 @@ namespace SimplePomodoro.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kolor przerwy.
+        /// </summary>
+        public static string BreakColor {
+            get {
+                return ResourceManager.GetString("BreakColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Usuń.
         /// </summary>
         public static string DeleteItem {
@@ -142,6 +151,15 @@ namespace SimplePomodoro.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Powtórzenia.
+        /// </summary>
+        public static string Repetitions {
+            get {
+                return ResourceManager.GetString("Repetitions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sekundy.
         /// </summary>
         public static string Seconds {
@@ -210,6 +228,15 @@ namespace SimplePomodoro.Localization {
         public static string Verification {
             get {
                 return ResourceManager.GetString("Verification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kolor pracy.
+        /// </summary>
+        public static string WorkColor {
+            get {
+                return ResourceManager.GetString("WorkColor", resourceCulture);
             }
         }
     }
