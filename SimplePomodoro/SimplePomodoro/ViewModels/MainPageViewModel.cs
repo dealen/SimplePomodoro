@@ -1,4 +1,5 @@
-﻿using SimplePomodoro.DataAccess;
+﻿using ReactiveUI;
+using SimplePomodoro.DataAccess;
 using SimplePomodoro.DataAccess.Model;
 using SimplePomodoro.Helpers;
 using SimplePomodoro.Localization;
@@ -13,16 +14,18 @@ using Xamarin.Forms;
 
 namespace SimplePomodoro.ViewModels
 {
-    public class MainPageViewModel : BaseViewModel
+    public class MainPageViewModel : ReactiveObject
     {
-        private int _timeOfWork;
-        private int _timeLeftForBreak;
-        private TimeUnits _timeUnit;
+        private readonly PomodoroRepository _pomodoroRepository;
         private int _intervals;
         private string _name;
-        private Schedule _selectedSchedule;
         private ObservableCollection<Schedule> _schdules;
-        private readonly PomodoroRepository _pomodoroRepository;
+        private Schedule _selectedSchedule;
+        private int _timeLeftForBreak;
+        private int _timeOfWork;
+        private TimeUnits _timeUnit;
+        private Color _selectedColorForWork;
+        private Color _selectedColorForBreak;
 
         public MainPageViewModel()
         {
@@ -30,90 +33,42 @@ namespace SimplePomodoro.ViewModels
             InitSchedule(null);
             CommandAddEntrySchedule = new Command(AddToSchedule);
             CommandDeleteSchedule = new Command(DeleteSchedule);
+            CommandShowSettings = new Command(ShowSettings);
+
+            ConfigureInteraction();
         }
 
-        private void InitSchedule(Schedule selectedSchedule)
+        private void ConfigureInteraction()
         {
-            var _schedules = _pomodoroRepository.GetSchedules();
-            Schdules = null;
-            Schdules = new ObservableCollection<Schedule>(_schedules);
-            if (!_schedules.Any()) return;
-            if (selectedSchedule != null)
-            {
-                var selectedItem = _schedules.FirstOrDefault(x => x.ID.Equals(selectedSchedule.ID));
-                if (selectedItem != null)
-                    SelectedSchedule = selectedItem;
-                else
-                    SelectedSchedule = _schedules.First();
-            }
-            else
-            {
-                SelectedSchedule = _schedules.First();
-            }
-        }
+            this.WhenAnyValue(
+                tow => tow.TimeOfWork,
+                tlfb => tlfb.TimeLeftForBreak,
+                name => name.Name,
+                i => i.Intervals)
+                .Subscribe(item =>
+                {
+                    this.RaisePropertyChanged(nameof(IsStartEnabled));
+                });
 
-        public Schedule SelectedSchedule
-        {
-            get => _selectedSchedule;
-            set
-            {
-                if (SetField(ref _selectedSchedule, value))
+            this.WhenAnyValue(s => s.SelectedSchedule)
+                .Subscribe(schedule =>
+                {
                     _OnSelectedScheduleChanged();
-            }
+                });
         }
 
         public ICommand CommandAddEntrySchedule { get; }
+
         public ICommand CommandDeleteSchedule { get; }
 
-        public ObservableCollection<Schedule> Schdules
-        {
-            get => _schdules;
-            set => SetField(ref _schdules, value);
-        }
-
-        public int TimeOfWork
-        {
-            get => _timeOfWork;
-            set
-            {
-                SetField(ref _timeOfWork, value);
-                this.OnPropertyChanged(nameof(IsStartEnabled));
-            }
-        }
-
-        public int TimeLeftForBreak
-        {
-            get => _timeLeftForBreak;
-            set
-            {
-                SetField(ref _timeLeftForBreak, value);
-                this.OnPropertyChanged(nameof(IsStartEnabled));
-            }
-        }
-
-        public TimeUnits TimeUnit
-        {
-            get => _timeUnit;
-            set => SetField(ref _timeUnit, value);
-        }
+        public ICommand CommandShowSettings { get; }
 
         public int Intervals
         {
             get => _intervals;
             set
             {
-                SetField(ref _intervals, value);
-                this.OnPropertyChanged(nameof(IsStartEnabled));
-            }
-        }
-
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                SetField(ref _name, value);
-                this.OnPropertyChanged(nameof(IsStartEnabled));
+                this.RaiseAndSetIfChanged(ref _intervals, value);
             }
         }
 
@@ -137,6 +92,66 @@ namespace SimplePomodoro.ViewModels
             }
         }
 
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _name, value);
+            }
+        }
+
+        public ObservableCollection<Schedule> Schdules
+        {
+            get => _schdules;
+            set => this.RaiseAndSetIfChanged(ref _schdules, value);
+        }
+
+        public Schedule SelectedSchedule
+        {
+            get => _selectedSchedule;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _selectedSchedule, value);
+            }
+        }
+
+        public int TimeLeftForBreak
+        {
+            get => _timeLeftForBreak;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _timeLeftForBreak, value);
+            }
+        }
+
+        public int TimeOfWork
+        {
+            get => _timeOfWork;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _timeOfWork, value);
+            }
+        }
+
+        public TimeUnits TimeUnit
+        {
+            get => _timeUnit;
+            set => this.RaiseAndSetIfChanged(ref _timeUnit, value);
+        }
+
+        public Color SelectedColorForWork
+        {
+            get => _selectedColorForWork;
+            set => this.RaiseAndSetIfChanged(ref _selectedColorForWork, value);
+        }
+
+        public Color SelectedColorForBreak
+        {
+            get => _selectedColorForBreak;
+            set => this.RaiseAndSetIfChanged(ref _selectedColorForBreak, value);
+        }
+
         private void _OnSelectedScheduleChanged()
         {
             if (_selectedSchedule == null) return;
@@ -146,23 +161,6 @@ namespace SimplePomodoro.ViewModels
             TimeOfWork = _selectedSchedule.TimeOfWork;
             TimeUnit = (TimeUnits)_selectedSchedule.TimeUnit;
             Name = _selectedSchedule.Name;
-            this.OnPropertyChanged(nameof(IsStartEnabled));
-        }
-
-        private async void DeleteSchedule(object obj)
-        {
-            try
-            {
-                if (obj is Schedule s)
-                {
-                    await _pomodoroRepository.DeleteSchedule(s.ID);
-                    InitSchedule(_selectedSchedule);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"error {ex.Message}{Environment.NewLine}{ex.StackTrace}");
-            }
         }
 
         private async void AddToSchedule(object obj)
@@ -184,6 +182,54 @@ namespace SimplePomodoro.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine($"error {ex.Message}{Environment.NewLine}{ex.StackTrace}");
+            }
+        }
+
+        private void ShowSettings(object obj)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"error {ex.Message}{Environment.NewLine}{ex.StackTrace}");
+            }
+        }
+
+        private async void DeleteSchedule(object obj)
+        {
+            try
+            {
+                if (obj is Schedule s)
+                {
+                    await _pomodoroRepository.DeleteSchedule(s.ID);
+                    InitSchedule(_selectedSchedule);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"error {ex.Message}{Environment.NewLine}{ex.StackTrace}");
+            }
+        }
+
+        private void InitSchedule(Schedule selectedSchedule)
+        {
+            var _schedules = _pomodoroRepository.GetSchedules();
+            Schdules = null;
+            Schdules = new ObservableCollection<Schedule>(_schedules);
+            if (!_schedules.Any()) return;
+            if (selectedSchedule != null)
+            {
+                var selectedItem = _schedules.FirstOrDefault(x => x.ID.Equals(selectedSchedule.ID));
+                if (selectedItem != null)
+                    SelectedSchedule = selectedItem;
+                else
+                    SelectedSchedule = _schedules.First();
+            }
+            else
+            {
+                SelectedSchedule = _schedules.First();
             }
         }
 

@@ -120,6 +120,9 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="BreakColor" xml:space="preserve">
+    <value>Break color</value>
+  </data>
   <data name="DeleteItem" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -144,6 +147,9 @@
   <data name="NumberOfIntervals" xml:space="preserve">
     <value>Number of intervals:</value>
   </data>
+  <data name="Repetitions" xml:space="preserve">
+    <value>Repetitions</value>
+  </data>
   <data name="Seconds" xml:space="preserve">
     <value>Seconds</value>
   </data>
@@ -167,5 +173,8 @@
   </data>
   <data name="Verification" xml:space="preserve">
     <value>Verification</value>
+  </data>
+  <data name="WorkColor" xml:space="preserve">
+    <value>Work color</value>
   </data>
 </root>

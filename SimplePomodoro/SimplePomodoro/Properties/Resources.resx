@@ -117,64 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add" xml:space="preserve">
-    <value>Dodaj</value>
-  </data>
-  <data name="BreakColor" xml:space="preserve">
-    <value>Kolor przerwy</value>
-  </data>
-  <data name="DeleteItem" xml:space="preserve">
-    <value>Usuń</value>
-  </data>
-  <data name="Exit" xml:space="preserve">
-    <value>Wyjście</value>
-  </data>
-  <data name="Hours" xml:space="preserve">
-    <value>Gdziny</value>
-  </data>
-  <data name="IntervalsLessThanZero" xml:space="preserve">
-    <value>Proszę wprowadzić ilość okresów pracy.</value>
-  </data>
-  <data name="Minutes" xml:space="preserve">
-    <value>Minuty</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Nazwa:</value>
-  </data>
-  <data name="NameEmpty" xml:space="preserve">
-    <value>Aby zapisać wymagana jest nazwa.</value>
-  </data>
-  <data name="NumberOfIntervals" xml:space="preserve">
-    <value>Ilość interwałów:</value>
-  </data>
-  <data name="Repetitions" xml:space="preserve">
-    <value>Powtórzenia</value>
-  </data>
-  <data name="Seconds" xml:space="preserve">
-    <value>Sekundy</value>
-  </data>
-  <data name="SimplePomodoro" xml:space="preserve">
-    <value>Simple pomodoro</value>
-  </data>
-  <data name="Start" xml:space="preserve">
-    <value>Start</value>
-  </data>
-  <data name="TimeForBreakLessThanZero" xml:space="preserve">
-    <value>Proszę wprowadzić czas na przerwę.</value>
-  </data>
-  <data name="TimeLeftOfWorkLessThanZero" xml:space="preserve">
-    <value>Proszę wprowadzić prawidłowy czas pracy.</value>
-  </data>
-  <data name="TimeOfBreak" xml:space="preserve">
-    <value>Przerwa:</value>
-  </data>
-  <data name="TimeOfWork" xml:space="preserve">
-    <value>Praca:</value>
-  </data>
-  <data name="Verification" xml:space="preserve">
-    <value>Weryfikacja</value>
-  </data>
-  <data name="WorkColor" xml:space="preserve">
-    <value>Kolor pracy</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\settings.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

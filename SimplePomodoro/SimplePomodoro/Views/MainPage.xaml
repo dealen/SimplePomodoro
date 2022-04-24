@@ -3,6 +3,7 @@
     x:Class="SimplePomodoro.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
     xmlns:converters="clr-namespace:SimplePomodoro.Converters"
     xmlns:helpers="clr-namespace:SimplePomodoro.Helpers"
     xmlns:translate="clr-namespace:SimplePomodoro.Localization"
@@ -69,20 +70,27 @@
             </StackLayout>
 
             <StackLayout Orientation="Horizontal">
-                <Label Style="{StaticResource labelFormStyle}" Text="{x:Static translate:Language.TimeOfWork}" />
-                <Entry Text="{Binding TimeOfWork}" />
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Style="{StaticResource labelFormStyle}" Text="{x:Static translate:Language.TimeOfBreak}" />
-                <Entry Text="{Binding TimeLeftForBreak}" />
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Style="{StaticResource labelFormStyle}" Text="{x:Static translate:Language.NumberOfIntervals}" />
-                <Entry Text="{Binding Intervals}" />
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Style="{StaticResource labelFormStyle}" Text="{x:Static translate:Language.Name}" />
-                <Entry Text="{Binding Name}" WidthRequest="150" />
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Style="{StaticResource labelFormStyle}" Text="{x:Static translate:Language.TimeOfWork}" />
+                        <Entry Text="{Binding TimeOfWork}" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Style="{StaticResource labelFormStyle}" Text="{x:Static translate:Language.TimeOfBreak}" />
+                        <Entry Text="{Binding TimeLeftForBreak}" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Style="{StaticResource labelFormStyle}" Text="{x:Static translate:Language.Repetitions}" />
+                        <Entry Text="{Binding Intervals}" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Style="{StaticResource labelFormStyle}" Text="{x:Static translate:Language.Name}" />
+                        <Entry Text="{Binding Name}" WidthRequest="100" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout>
+                    <ImageButton Source="Resources/settings.png" />
+                </StackLayout>
             </StackLayout>
 
             <StackLayout HorizontalOptions="Center" Orientation="Horizontal">

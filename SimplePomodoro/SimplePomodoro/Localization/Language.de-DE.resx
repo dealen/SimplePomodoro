@@ -120,6 +120,9 @@
   <data name="Add" xml:space="preserve">
     <value>Hinzufügen</value>
   </data>
+  <data name="BreakColor" xml:space="preserve">
+    <value>Farbe brechen</value>
+  </data>
   <data name="DeleteItem" xml:space="preserve">
     <value>Löschen</value>
   </data>
@@ -153,6 +156,9 @@
   <data name="Start" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="String" xml:space="preserve">
+    <value>Wiederholungen</value>
+  </data>
   <data name="TimeForBreakLessThanZero" xml:space="preserve">
     <value>Bitte geben Sie die korrekte Ruhezeit ein.</value>
   </data>
@@ -167,5 +173,8 @@
   </data>
   <data name="Verification" xml:space="preserve">
     <value>Überprüfung</value>
+  </data>
+  <data name="WorkColor" xml:space="preserve">
+    <value>Arbeitsfarbe</value>
   </data>
 </root>
