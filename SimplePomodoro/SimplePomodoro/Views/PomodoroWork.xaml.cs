@@ -68,6 +68,9 @@ namespace SimplePomodoro.Views
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     DisplayAlert("Work completed", "Your work is completed", "Ok");
+
+                    Work -= PomodoroWork_Work;
+                    Break -= PomodoroWork_Break;
                     Navigation.PopToRootAsync(true);
                 });
             }
