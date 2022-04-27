@@ -3,7 +3,6 @@ using SimplePomodoro.DataAccess;
 using SimplePomodoro.DataAccess.Model;
 using SimplePomodoro.Helpers;
 using SimplePomodoro.Localization;
-using SimplePomodoro.ViewModels.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
