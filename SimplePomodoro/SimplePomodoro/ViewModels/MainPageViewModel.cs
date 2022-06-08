@@ -170,7 +170,7 @@ namespace SimplePomodoro.ViewModels
                 {
                     if (string.IsNullOrWhiteSpace(Name))
                     {
-                        await Application.Current.MainPage.DisplayAlert(Language.Verification, Language.NameEmpty, "Ok");
+                        await Application.Current.MainPage.DisplayAlert(Language.Verification, Language.NameEmpty, Language.OK);
                         return;
                     }
 
@@ -236,19 +236,19 @@ namespace SimplePomodoro.ViewModels
         {
             if (TimeOfWork <= 0)
             {
-                await Application.Current.MainPage.DisplayAlert(Language.Verification, Language.TimeLeftOfWorkLessThanZero, "Ok");
+                await Application.Current.MainPage.DisplayAlert(Language.Verification, Language.TimeLeftOfWorkLessThanZero, Language.OK);
                 return false;
             }
 
             if (TimeLeftForBreak <= 0)
             {
-                await Application.Current.MainPage.DisplayAlert(Language.Verification, Language.TimeForBreakLessThanZero, "Ok");
+                await Application.Current.MainPage.DisplayAlert(Language.Verification, Language.TimeForBreakLessThanZero, Language.OK);
                 return false;
             }
 
             if (Intervals <= 0)
             {
-                await Application.Current.MainPage.DisplayAlert(Language.Verification, Language.IntervalsLessThanZero, "Ok");
+                await Application.Current.MainPage.DisplayAlert(Language.Verification, Language.IntervalsLessThanZero, Language.OK);
                 return false;
             }
 
