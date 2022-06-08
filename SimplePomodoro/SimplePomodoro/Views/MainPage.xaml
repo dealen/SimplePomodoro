@@ -9,7 +9,7 @@
     xmlns:translate="clr-namespace:SimplePomodoro.Localization"
     xmlns:vm="clr-namespace:SimplePomodoro.ViewModels"
     x:Name="mainPage"
-    BackgroundColor="LightSkyBlue">
+    BackgroundColor="Black">
 
     <ContentPage.BindingContext>
         <vm:MainPageViewModel x:Name="mainViewModel" />
@@ -22,28 +22,35 @@
             <Style TargetType="Entry">
                 <Setter Property="FontFamily" Value="Segoe UI" />
                 <Setter Property="FontSize" Value="12" />
+                <Setter Property="TextColor" Value="White" />
                 <Setter Property="WidthRequest" Value="50" />
                 <Setter Property="VerticalTextAlignment" Value="Center" />
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
                 <Style.Triggers>
                     <Trigger TargetType="Entry" Property="Text" Value="0">
-                        <Setter Property="Background" Value="Red" />
+                        <Setter Property="Background" Value="Gray" />
                     </Trigger>
                 </Style.Triggers>
             </Style>
 
             <Style x:Key="labelFormStyle" TargetType="Label">
                 <Setter Property="WidthRequest" Value="150" />
+                <Setter Property="TextColor" Value="White" />
                 <Setter Property="HorizontalTextAlignment" Value="End" />
                 <Setter Property="VerticalTextAlignment" Value="Center" />
             </Style>
 
             <Style x:Key="labelGridStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="14" />
+                <Setter Property="TextColor" Value="White" />
             </Style>
 
             <Style TargetType="Button">
                 <Setter Property="WidthRequest" Value="140" />
+            </Style>
+
+            <Style TargetType="RadioButton">
+                <Setter Property="TextColor" Value="White"/>
             </Style>
 
         </ResourceDictionary>
@@ -124,7 +131,7 @@
                         x:Name="btnExit"
                         Clicked="btnExit_Clicked"
                         Text="{x:Static translate:Language.Exit}"
-                        WidthRequest="60" />
+                        WidthRequest="100" />
                 </Frame>
             </StackLayout>
 
@@ -158,6 +165,7 @@
                                     Margin="10,0,10,0"
                                     FontAttributes="Bold"
                                     FontSize="18"
+                                    TextColor="White"
                                     Text="{Binding Name}" />
 
                                 <Grid Grid.Column="1">

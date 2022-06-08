@@ -42,6 +42,11 @@ namespace SimplePomodoro.ViewModels
             private set { SetField(ref _totalIntervals, value); }
         }
 
+        public bool IsLastTurn()
+        {
+            return _totalIntervals == 1;
+        }
+
         public TimeUnits TimeUnits
         {
             get { return _timeUnits; }

@@ -1,4 +1,5 @@
 ﻿using SimplePomodoro.Helpers;
+using SimplePomodoro.Localization;
 using SimplePomodoro.ViewModels;
 using System;
 using System.Diagnostics;
@@ -43,7 +44,15 @@ namespace SimplePomodoro.Views
             Device.StartTimer(TimeSpan.FromSeconds(ViewModel.TimeLeftOfWork), () =>
             {
                 Debug.WriteLine($"Work interval ended");
-                Break?.Invoke();
+                if (!ViewModel.IsLastTurn())
+                {
+                    Break?.Invoke();
+                }
+                else
+                {
+                    WorkCompleted();
+                }
+
                 return false;
             });
         }
@@ -63,17 +72,22 @@ namespace SimplePomodoro.Views
             }
             else
             {
-                Work = null;
-                Break = null;
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    DisplayAlert("Work completed", "Your work is completed", "Ok");
-
-                    Work -= PomodoroWork_Work;
-                    Break -= PomodoroWork_Break;
-                    Navigation.PopToRootAsync(true);
-                });
+                WorkCompleted();
             }
+        }
+
+        private void WorkCompleted()
+        {
+            Work = null;
+            Break = null;
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                DisplayAlert(Language.SimplePomodoro, Language.WorkCompleted, Language.OK);
+
+                Work -= PomodoroWork_Work;
+                Break -= PomodoroWork_Break;
+                Navigation.PopToRootAsync(true);
+            });
         }
 
         private async void Button_Clicked(object sender, EventArgs e)

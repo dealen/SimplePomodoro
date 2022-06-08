@@ -147,6 +147,9 @@
   <data name="NumberOfIntervals" xml:space="preserve">
     <value>Anzahl der Intervalle:</value>
   </data>
+  <data name="OK" xml:space="preserve">
+    <value>Ok</value>
+  </data>
   <data name="Seconds" xml:space="preserve">
     <value>Sekunden</value>
   </data>
@@ -176,5 +179,8 @@
   </data>
   <data name="WorkColor" xml:space="preserve">
     <value>Arbeitsfarbe</value>
+  </data>
+  <data name="WorkCompleted" xml:space="preserve">
+    <value>Ihre Arbeit ist getan</value>
   </data>
 </root>
